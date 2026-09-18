@@ -1,9 +1,11 @@
 import networkx as nx
 import numpy as np
+import matplotlib.pyplot as plt
 
 class GraphBuilder:
-    def __init__(self):
-        self.graph = nx.Graph()
+    def __init__(self, directed=False):
+        self.directed = directed
+        self.graph = nx.DiGraph() if directed else nx.Graph()
 
     def add_node(self, node):
         self.graph.add_node(node)
@@ -21,11 +23,27 @@ class GraphBuilder:
         
         if matrix.shape[0] != matrix.shape[1]:
             raise ValueError("Adjacency matrix must be square.")
+        
+        self.graph.clear()
 
-        for i in range(matrix.shape[0]):
-            self.add_node(i)
-            for j in range(matrix.shape[1]):
-                if matrix[i][j] != 0:
-                    self.add_edge(i, j)
+        self.graph = nx.from_numpy_array(
+            matrix, 
+            create_using=nx.DiGraph if self.directed else nx.Graph
+        )
 
-
+    def plot_graph(self):
+        if self.graph.number_of_nodes() == 0:
+            raise ValueError("El grafo está vacío. Primero debes construirlo con una matriz.")
+            
+        #Limpiar Plotter
+        plt.clf()
+        
+        pos = nx.spring_layout(self.graph)
+        
+        nx.draw_networkx(self.graph, pos)
+        
+        # Dibujo por defecto de los pesos
+        pesos = nx.get_edge_attributes(self.graph, 'weight')
+        nx.draw_networkx_edge_labels(self.graph, pos, edge_labels=pesos)
+        
+        plt.show()
