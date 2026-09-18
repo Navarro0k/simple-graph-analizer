@@ -1,5 +1,6 @@
 from graph_builder import GraphBuilder
 import tkinter as tk
+from tkinter import messagebox
 import numpy as np
 
 class GraphApp:
@@ -29,7 +30,7 @@ class GraphApp:
         tk.Button(root, text="Construir y Graficar", command=self.procesar_y_graficar, bg="lightblue").pack(pady=10)
 
     def generar_matriz_gui(self):
-        for widget in self.matrix_frame.winfo_children():
+        for widget in self.matrix_framse.winfo_children():
             widget.destroy()
             
         try:
