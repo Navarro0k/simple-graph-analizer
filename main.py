@@ -1,7 +1,7 @@
-from graph_builder import GraphBuilder
 import tkinter as tk
 from tkinter import messagebox
 import numpy as np
+from graph_builder import GraphBuilder
 
 class GraphApp:
     def __init__(self, root):
@@ -11,7 +11,6 @@ class GraphApp:
         self.directed_var = tk.BooleanVar(value=False)
         self.matrix_entries = []
 
-        # Frame superior
         control_frame = tk.Frame(root)
         control_frame.pack(pady=10, padx=10)
 
@@ -23,14 +22,13 @@ class GraphApp:
 
         tk.Button(control_frame, text="Generar Matriz", command=self.generar_matriz_gui).grid(row=0, column=3, padx=10)
 
-        # Frame central para la matriz
         self.matrix_frame = tk.Frame(root)
         self.matrix_frame.pack(pady=10, padx=10)
 
         tk.Button(root, text="Construir y Graficar", command=self.procesar_y_graficar, bg="lightblue").pack(pady=10)
 
     def generar_matriz_gui(self):
-        for widget in self.matrix_framse.winfo_children():
+        for widget in self.matrix_frame.winfo_children():
             widget.destroy()
             
         try:
@@ -45,8 +43,6 @@ class GraphApp:
             for j in range(n):
                 entry = tk.Entry(self.matrix_frame, width=5, justify="center")
                 entry.grid(row=i, column=j, padx=2, pady=2)
-                # SE DEJA VACÍO A PROPÓSITO: una interfaz limpia. 
-                # Si está vacío, luego se interpretará como 0.
                 fila.append(entry)
             self.matrix_entries.append(fila)
 
@@ -58,7 +54,6 @@ class GraphApp:
         n = len(self.matrix_entries)
         matriz_numpy = np.zeros((n, n))
 
-        # Recorrer entradas: Casilla vacía = 0, de lo contrario se toma el número escrito
         for i in range(n):
             for j in range(n):
                 valor = self.matrix_entries[i][j].get().strip()
@@ -71,11 +66,12 @@ class GraphApp:
                         messagebox.showerror("Error de Entrada", f"Por favor ingresa un número válido en la fila {i+1}, columna {j+1}.")
                         return
 
-        # Instanciar y enviar
         try:
             builder = GraphBuilder(directed=self.directed_var.get())
             builder.build_graph_matrix(matriz_numpy)
             builder.plot_graph()
+            print(f"Los vertices son V:{str(builder.get_nodes())}")
+            print(f"Las aristas son A:{str(builder.get_edges())}")
         except Exception as e:
             messagebox.showerror("Error al graficar", str(e))
 

@@ -13,6 +13,12 @@ class GraphBuilder:
     def add_edge(self, node1, node2):
         self.graph.add_edge(node1, node2)
 
+    def get_nodes(self):
+        return list(self.graph.nodes)
+
+    def get_edges(self):
+        return list(self.graph.edges(data="weight"))
+
     def get_graph(self):
         return self.graph
 
