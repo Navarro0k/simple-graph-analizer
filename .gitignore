@@ -1,1 +1,47 @@
-/__pycache__
+# Cache de Python y archivos compilados
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+.ipynb_checkpoints/
+
+# Entornos virtuales (Buenas prácticas)
+venv/
+.venv/
+env/
+.env/
+ENV/
+
+# Distribución y empaquetamiento (si usas setup.py o poetry)
+eggs/
+.eggs/
+downloads/
+eggs/
+.eggs/
+downloads/
+dist/
+build/
+*.egg-info/
+
+# Archivos de configuración local y secretos (¡NUNCA subas credenciales!)
+.env
+.env.local
+.env.*.local
+*.secrets
+
+# Logs del sistema y de la aplicación
+*.log
+
+# Carpetas específicas de editores de código (Opcional pero recomendado)
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
+
+# Archivos del sistema operativo
+.DS_Store
+Thumbs.db
