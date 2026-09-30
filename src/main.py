@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import messagebox
 import numpy as np
-from graph_builder import GraphBuilder
+from components.graph_builder import GraphBuilder
 
 class GraphApp:
     def __init__(self, root):
