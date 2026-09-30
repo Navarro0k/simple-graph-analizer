@@ -17,8 +17,8 @@ def dijkstra(graph, start, end):
         if current_node == end:
             break
         
-        for n in graph.n(current_node):
-            weigth = graph[current_node][n].get("weigth")
+        for n in graph.neighbors(current_node):
+            weigth = graph[current_node][n].get("weight")
             
             if weigth < 0:
                 print("El algoritmo Dijkstra no soporta aristas con pesos negativos")
@@ -26,7 +26,7 @@ def dijkstra(graph, start, end):
             distance = current_dist + weigth
             
             if distance < distances[n]:
-                distance[n] = distance
+                distances[n] = distance
                 predecessors[n] = current_node
                 hq.heappush(pq, (distance, n))
                 
@@ -40,4 +40,4 @@ def dijkstra(graph, start, end):
         current = predecessors[current]
     path.reverse()
     
-    return path, distance[end]
+    return path, distances[end]
