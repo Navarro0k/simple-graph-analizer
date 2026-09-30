@@ -1,4 +1,5 @@
 import networkx as nx
+
 def bellman(graph: nx.Graph | nx.DiGraph, start, end, directed=False):
     
     distances = {} #Distancias a iterar
@@ -30,10 +31,16 @@ def bellman(graph: nx.Graph | nx.DiGraph, start, end, directed=False):
                     distances[u] = distances[v] + peso
                     predecessors[u] = v
 
+    #Deteccionde ciclos negativos
+    for u, v, data in graph.edges(data=True):
+        peso = data.get('weight', 1)
+        if distances[u] + peso < distances[v] or (not directed and distances[v] + peso < distances[u]):
+            raise ValueError("El grafo contiene un ciclo de peso negativo.")
+
     if distances[end] == float('inf'):
         return [], float('inf')
 
-    #Devolver camino optimo
+    #Devolver camino iptimo
     path = []
     current_node = end
 
@@ -44,5 +51,3 @@ def bellman(graph: nx.Graph | nx.DiGraph, start, end, directed=False):
     path.reverse()
 
     return path, distances[end]
-            
-    
